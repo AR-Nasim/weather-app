@@ -1,3 +1,4 @@
+const bgImg = document.getElementById("bg");
 const weatherStatus = document.getElementById("weather-status");
 const error = document.getElementById("error");
 const city = document.getElementById("searched-city");
@@ -8,11 +9,15 @@ const cityName = document.getElementById("city-name");
 const temperature = document.getElementById("temperature");
 const api = 'https://api.openweathermap.org/data/2.5/weather';
 const apiKey = 'a3b5f59cfcb6d1f5a3a88380cb2d8649';
+const imgApi = 'https://api.unsplash.com/search/photos';
+const imgApiKey = 'oj9mWi6oAIts4F-TQAB8JHa5MqXbacXzYBr5XucEcZg';
 
 
 button.addEventListener("click", () => {
     const searchedCity = city.value;
+    getBackgroundImg(searchedCity);
     getTemperature(searchedCity);
+    
 
 })
 
@@ -30,6 +35,15 @@ function getTemperature(searchedCity) {
         });
 }
 
+function getBackgroundImg(searchedCity){
+    const imgURL = `${imgApi}?query=${searchedCity}&client_id=${imgApiKey}`;
+    fetch(imgURL)
+    .then(res => res.json())
+    .then(data => {
+        bgImg.src = data.results[1].links.download;
+    });
+}
+
 function displayTemperature(element){
     weatherStatus.style.display = "block";
     error.style.display = "none";
@@ -45,9 +59,7 @@ function errorMessage(){
     weatherStatus.style.display = "none";
     error.style.display = "block";
 }
-
+getBackgroundImg("dhaka");
 getTemperature("dhaka");
 
-fetch('https://api.unsplash.com/search/photos?query=office&client_id=oj9mWi6oAIts4F-TQAB8JHa5MqXbacXzYBr5XucEcZg')
-    .then(res => res.json())
-    .then(data => console.log(data));
+
