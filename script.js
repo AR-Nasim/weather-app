@@ -40,19 +40,18 @@ function getBackgroundImg(searchedCity){
     fetch(imgURL)
     .then(res => res.json())
     .then(data => {
-        bgImg.src = data.results[1].links.download;
+        bgImg.src = data.results[1].urls.full;
     });
 }
 
 function displayTemperature(element){
     weatherStatus.style.display = "block";
     error.style.display = "none";
-    const iconURL = `http://openweathermap.org/img/wn/${element.weather[0].icon}@2x.png`;
+    const iconURL = `https://openweathermap.org/img/wn/${element.weather[0].icon}@2x.png`;
     weatherIcon.src = iconURL;
     cityName.innerText = element.name;
     temperature.innerText = Math.round(element.main.temp - 273);
     weather.innerText = element.weather[0].main;
-    console.log(element);
 }
 
 function errorMessage(){
